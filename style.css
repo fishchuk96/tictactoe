@@ -1,0 +1,114 @@
+body {
+    background-color: rgb(245, 246, 250);
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0px;
+    margin: 0px;
+}
+
+h1, h3 {
+    color: rgb(59, 74, 115);
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.board {
+    position: relative;
+}
+
+td {
+    width: 80px;
+    height: 80px;
+    border: 4px solid rgb(125, 155, 234);
+}
+
+.flex {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px;
+    margin: 0px;
+}
+
+.clear_btn {
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: 0px;
+    background-color: rgb(101, 125, 255);
+    color: white;
+    font-weight: bold;
+}
+
+#svg {
+    position: absolute;
+    background-color: none;
+    display: none;
+}
+
+.xelement, .oelement {
+    width: 80px;
+    height: 75px;
+}
+
+.xclassFrom {
+    d: path("M15,15L65,65");
+}
+
+.xclassTo {
+    d: path("M65,15L15,65");
+}
+
+.oclass {
+    cx: 40px;
+    cy: 40px;
+    r: 25px;
+}
+
+@media only screen and (max-width: 450px) {
+
+    body {
+        background-color: aqua;
+    }
+    td {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgb(125, 155, 234);
+    }
+
+    .xelement, .oelement {
+        width: 50px;
+        height: 45px;
+    }
+
+    .xclassFrom {
+        d: path("M10,10L40,40");
+    }
+
+    .xclassTo {
+        d: path("M40,10L10,40");
+    }
+
+    .oclass {
+        cx: 25px;
+        cy: 25px;
+        r: 15px;
+    }
+
+    .line {
+        visibility: hidden;
+        width: 150px;
+        height: 6px;
+        background-color: rgb(59, 74, 115);
+        position: absolute;
+        left: 50%;
+        margin-left: -75px;
+        top: 50%;
+        margin-top: -3px;
+    }
+
+  }
