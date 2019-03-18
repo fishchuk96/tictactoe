@@ -47,7 +47,7 @@ td {
 #svg {
     position: absolute;
     background-color: none;
-    display: none;
+    visibility: hidden;
 }
 
 .xelement, .oelement {
@@ -71,9 +71,6 @@ td {
 
 @media only screen and (max-width: 450px) {
 
-    body {
-        background-color: aqua;
-    }
     td {
         width: 50px;
         height: 50px;

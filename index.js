@@ -8,6 +8,7 @@ let step = true;
 let drawChecker = false;
 let table = createMatrix([], gameSize);
 let win = false;
+let width;
 
 drawTable(gameSize);
 const elements = document.querySelectorAll('td');
@@ -20,7 +21,7 @@ elements.forEach((el) => el.addEventListener('click', () => {
         
         if (step && table[row][col] === undefined) {
             el.innerHTML = `
-                <svg class="xelement">
+                <svg class="xelement icon">
                     <path class="xclassFrom" stroke="rgb(59, 74, 115)" stroke-width="6"></path>
                     <path class="xclassTo" stroke="rgb(59, 74, 115)" stroke-width="6"></path>
                 </svg>
@@ -29,7 +30,7 @@ elements.forEach((el) => el.addEventListener('click', () => {
             step = false;
         } else if (table[row][col] === undefined) {
             el.innerHTML = `
-                <svg class="oelement">
+                <svg class="oelement icon">
                     <circle class="oclass" stroke="rgb(76, 108, 239)" stroke-width="6" fill="none"/>
                 </svg>
             `;
@@ -47,7 +48,7 @@ function gameInfo(row, col, marker, gameLabel) {
     if (calculateWinner(row, col)) {
         let [x, y, x1, y1] = calculateWinner(row, col);
         
-        //printLine(countCoordinate(row), countCoordinate(col), countCoordinate(x), countCoordinate(y));
+        printLine(countCoordinate(x), countCoordinate(y), countCoordinate(x1), countCoordinate(y1));
         gameText.innerHTML = `${table[row][col]} win!`;
         win = true;
         return;
@@ -64,13 +65,15 @@ function clearTable() {
     drawChecker = false;
     win = false;
     gameText.innerHTML = 'X first move';
-    document.querySelectorAll('svg').forEach(icon => icon.style.display = 'none');
+    let svg = document.querySelector('#svg');
+    svg.style.visibility = 'hidden';
+    document.querySelectorAll('.icon').forEach(icon => icon.style.display = 'none');
 }
 
 function calculateWinner(cellX, cellY) {
     let res = null;	
     let newFig = getFig(cellX,cellY);
-    let x1, y1;
+    let fromX, fromY, toX, toY;
 	if( ! newFig ) return false;
 
 	res = res || checkLine( cellX, cellY, 1, 0 ); //vertical
@@ -85,22 +88,28 @@ function calculateWinner(cellX, cellY) {
 	}
 
 	function checkLine( x, y, dx, dy ){
+        fromX = x;
+        fromY = y;
 		x = +x;
 		y = +y;
 		var score = 0;
-		while( getFig( x - dx, y - dy ) == newFig ){		
+		while( getFig( x - dx, y - dy ) == newFig ){
 			x -= dx;	
             y -= dy;
-            [x1, y1] = [x, y];
+            fromX = x;
+            fromY = y;
 		}
-		while( getFig( x, y ) == newFig ){	
+		while( getFig( x, y ) == newFig ){
+            toX = x;
+            toY = y;
 			x += dx;
-			y += dy;
-			score++;
-		}
-		if( score >= 4 ) {
-            return [x, y, x1, y1];
+            y += dy;
+            score++;
+        }	
+        if( score >= 4 ) {
+            return [fromX, fromY, toX, toY];
         }
+		
 		return false;
 	}
 }
@@ -131,25 +140,25 @@ function drawTable(tableSize) {
             let td = document.createElement('td');
             td.setAttribute('id', `${row}_${col}`);
             rowSection.appendChild(td);
+            width = td.offsetWidth;
         }
     }  
     
  
 } 
-/*
+
 function countCoordinate (val) {
-    return (val * 80 ) + (80 / 2);
+    return (val * width ) + (width / 2);
  }
 
 function printLine(x1, y1, x2, y2) {
     let svg = document.querySelector('#svg');
     let line = document.querySelector('#line');
-    svg.style.width = gameSize * 80;
-    svg.style.height = gameSize * 80;
+    svg.style.width = gameSize * width;
+    svg.style.height = gameSize * width;
     line.setAttribute('x1', y1);
     line.setAttribute('y1', x1);
     line.setAttribute('x2', y2);
     line.setAttribute('y2', x2);
-    svg.style.visibility = 'visible';
-    
-}*/
+    svg.style.visibility = 'visible'; 
+}
