@@ -1,2 +1,2 @@
 # tictactoe
-<a href="https://github.com/fishchuk96/tictactoe">Check it out!</a>
+<a href="https://fishchuk96.github.io/tictactoe/">Check it out!</a>
